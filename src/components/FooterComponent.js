@@ -1,6 +1,6 @@
 import React from "react";
 import '../App.css'
-
+import { Link } from 'react-router-dom';
 function Footer() {
     return (
         <div className="footer">
@@ -9,10 +9,10 @@ function Footer() {
                 <div className="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul className="list-unstyled">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Menu</a></li>
-                        <li><a href="contactus.html">Contact</a></li>
+                        <li><Link to="/home">Home</Link></li>
+                        <li><Link to="/aboutus">About</Link></li>
+                        <li><Link to="/menu">Menu</Link></li>
+                        <li><Link to="/contactus">Contact us</Link></li>
                     </ul>
                 </div>
                 <div className="col-7 col-sm-5">
@@ -23,8 +23,8 @@ function Footer() {
 		              HONG KONG<br />
 		              <i className="fa fa-phone fa-lg"></i>: +852 1234 5678<br />
 		              <i className="fa fa-fax fa-lg"></i>: +852 8765 4321<br />
-		              <i className="fa fa-envelope fa-lg"></i>: <a href="mailto:confusion@food.net">
-                         confusion@food.net</a>
+		              <i className="fa fa-envelope fa-lg"></i>: <Link to="mailto:confusion@food.net">
+                         confusion@food.net</Link>
                     </address>
                 </div>
                 <div className="col-12 col-sm-4 align-self-center">
