@@ -43,10 +43,14 @@ class CommentForm extends React.Component {
   }
 
   addComment(comment) {
-    this.setState({
-      isNewComment: false,
-    });
-    console.log(comment);
+    this.toggleNewComment();
+
+    this.props.addComment(
+      this.props.dishId,
+      comment.rating,
+      comment.author,
+      comment.comment
+    );
   }
 
   render() {
@@ -158,9 +162,9 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments(dish) {
+function RenderComments({ comments, addComment, dish }) {
+  console.log(dish, comments);
   if (dish != null) {
-    const comments = dish.comments;
     return comments.map((com) => {
       let formatedDate = new Intl.DateTimeFormat("en-US", {
         year: "numeric",
@@ -168,12 +172,14 @@ function RenderComments(dish) {
         day: "2-digit",
       }).format(new Date(Date.parse(com.date)));
       return (
-        <li key={com.id} className="text-left font-weight-normal">
-          <p> {com.comment} </p>
-          <p>
-            -- {com.author}, {formatedDate}{" "}
-          </p>
-        </li>
+        <>
+          <li key={com.id} className="text-left font-weight-normal">
+            <p> {com.comment} </p>
+            <p>
+              -- {com.author}, {formatedDate}{" "}
+            </p>
+          </li>
+        </>
       );
     });
   } else {
@@ -201,8 +207,12 @@ const DishDetail = (props) => {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={props.comments} />
-          <CommentForm />
+          <RenderComments
+            comments={props.comments}
+            addComment={props.addComment}
+            dish={props.dish.id}
+          />
+          <CommentForm dishId={props.dish.id} addComment={props.addComment} />{" "}
         </div>
       </div>
     </div>
