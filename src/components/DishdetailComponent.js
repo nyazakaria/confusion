@@ -19,6 +19,7 @@ import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const styleCard = {
   padding: 0,
@@ -153,19 +154,25 @@ class CommentForm extends React.Component {
 function RenderDish({ dish }) {
   return (
     <div style={styleCard}>
-      <Card>
-        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-        <CardBody>
-          <CardTitle> {dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
+      <FadeTransform
+        in
+        transformProps={{
+          exitTransform: "scale(0.5) translateY(-50%)",
+        }}
+      >
+        <Card>
+          <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+          <CardBody>
+            <CardTitle> {dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+      </FadeTransform>
     </div>
   );
 }
 
 function RenderComments({ comments, postComment, dish }) {
-
   if (dish != null) {
     return comments.map((com) => {
       let formatedDate = new Intl.DateTimeFormat("en-US", {
@@ -174,14 +181,16 @@ function RenderComments({ comments, postComment, dish }) {
         day: "2-digit",
       }).format(new Date(Date.parse(com.date)));
       return (
-        <>
-          <li key={com.id} className="text-left font-weight-normal">
-            <p> {com.comment} </p>
-            <p>
-              -- {com.author}, {formatedDate}{" "}
-            </p>
-          </li>
-        </>
+        <Fade in>
+          <>
+            <li key={com.id} className="text-left font-weight-normal">
+              <p> {com.comment} </p>
+              <p>
+                -- {com.author}, {formatedDate}{" "}
+              </p>
+            </li>
+          </>
+        </Fade>
       );
     });
   } else {
@@ -226,12 +235,17 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComments
-              comments={props.comments}
+            <Stagger in>
+              <RenderComments
+                comments={props.comments}
+                postComment={props.postComment}
+                dish={props.dish.id}
+              />
+            </Stagger>
+            <CommentForm
+              dishId={props.dish.id}
               postComment={props.postComment}
-              dish={props.dish.id}
-            />
-            <CommentForm dishId={props.dish.id} postComment={props.postComment} />{" "}
+            />{" "}
           </div>
         </div>
       </div>

@@ -10,14 +10,13 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   postComment,
-  addComment,
   fetchDishes,
   fetchComments,
   fetchPromos,
 } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { actions } from "react-redux-form";
-
+import "../App.css";
 const mapStateToProps = (state) => {
   return {
     dishes: state.dishes,

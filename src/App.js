@@ -3,7 +3,7 @@ import Main from "./components/MainComponent";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ConfigStore } from "./redux/confiStore";
-
+import "./App.css";
 const store = ConfigStore();
 
 class App extends Component {
