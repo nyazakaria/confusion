@@ -44,10 +44,10 @@ class CommentForm extends React.Component {
     });
   }
 
-  addComment(comment) {
+  postComment(comment) {
     this.toggleNewComment();
 
-    this.props.addComment(
+    this.props.postComment(
       this.props.dishId,
       comment.rating,
       comment.author,
@@ -71,7 +71,7 @@ class CommentForm extends React.Component {
             Submit Comment
           </ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={(value) => this.addComment(value)}>
+            <LocalForm onSubmit={(value) => this.postComment(value)}>
               <Row className="form-group">
                 <Label htmlFor="rating" md={12}>
                   Rating
@@ -164,7 +164,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments, addComment, dish }) {
+function RenderComments({ comments, postComment, dish }) {
 
   if (dish != null) {
     return comments.map((com) => {
@@ -228,10 +228,10 @@ const DishDetail = (props) => {
           <div className="col-12 col-md-5 m-1">
             <RenderComments
               comments={props.comments}
-              addComment={props.addComment}
+              postComment={props.postComment}
               dish={props.dish.id}
             />
-            <CommentForm dishId={props.dish.id} addComment={props.addComment} />{" "}
+            <CommentForm dishId={props.dish.id} postComment={props.postComment} />{" "}
           </div>
         </div>
       </div>
