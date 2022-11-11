@@ -6,7 +6,6 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
-  NavItem,
 } from "reactstrap";
 import { Loading } from "./Loading";
 import {baseUrl} from '../shared/baseUrl'
