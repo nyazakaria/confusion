@@ -18,6 +18,8 @@ import {
 import { LocalForm, Control, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
+import { baseUrl } from "../shared/baseUrl";
+
 const styleCard = {
   padding: 0,
 };
@@ -152,7 +154,7 @@ function RenderDish({ dish }) {
   return (
     <div style={styleCard}>
       <Card>
-        <CardImg width="100%" src={dish.image} alt={dish.name} />
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
         <CardBody>
           <CardTitle> {dish.name}</CardTitle>
           <CardText>{dish.description}</CardText>
@@ -163,7 +165,7 @@ function RenderDish({ dish }) {
 }
 
 function RenderComments({ comments, addComment, dish }) {
-  console.log(dish, comments);
+
   if (dish != null) {
     return comments.map((com) => {
       let formatedDate = new Intl.DateTimeFormat("en-US", {

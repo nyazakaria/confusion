@@ -1,7 +1,7 @@
 import * as ActionType from "./ActionTypes";
 
 
-
+// reducers
 export const Dishes = (state = {
   isLoading: true,
   err: null, 
