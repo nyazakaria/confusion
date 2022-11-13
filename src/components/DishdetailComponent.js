@@ -154,12 +154,7 @@ class CommentForm extends React.Component {
 function RenderDish({ dish }) {
   return (
     <div style={styleCard}>
-      <FadeTransform
-        in
-        transformProps={{
-          exitTransform: "scale(0.5) translateY(-50%)",
-        }}
-      >
+ 
         <Card>
           <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
           <CardBody>
@@ -167,7 +162,7 @@ function RenderDish({ dish }) {
             <CardText>{dish.description}</CardText>
           </CardBody>
         </Card>
-      </FadeTransform>
+  
     </div>
   );
 }
@@ -181,7 +176,7 @@ function RenderComments({ comments, postComment, dish }) {
         day: "2-digit",
       }).format(new Date(Date.parse(com.date)));
       return (
-        <Fade in>
+       
           <>
             <li key={com.id} className="text-left font-weight-normal">
               <p> {com.comment} </p>
@@ -190,7 +185,7 @@ function RenderComments({ comments, postComment, dish }) {
               </p>
             </li>
           </>
-        </Fade>
+      
       );
     });
   } else {
@@ -235,13 +230,13 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <Stagger in>
+           
               <RenderComments
                 comments={props.comments}
                 postComment={props.postComment}
                 dish={props.dish.id}
               />
-            </Stagger>
+          
             <CommentForm
               dishId={props.dish.id}
               postComment={props.postComment}
