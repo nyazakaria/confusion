@@ -35,7 +35,7 @@ class CommentForm extends React.Component {
     this.state = {
       isNewComment: false,
     };
-
+    console.log(this.props, "comments props");
     this.toggleNewComment = this.toggleNewComment.bind(this);
   }
 
@@ -154,15 +154,13 @@ class CommentForm extends React.Component {
 function RenderDish({ dish }) {
   return (
     <div style={styleCard}>
- 
-        <Card>
-          <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle> {dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
-  
+      <Card>
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+        <CardBody>
+          <CardTitle> {dish.name}</CardTitle>
+          <CardText>{dish.description}</CardText>
+        </CardBody>
+      </Card>
     </div>
   );
 }
@@ -176,16 +174,14 @@ function RenderComments({ comments, postComment, dish }) {
         day: "2-digit",
       }).format(new Date(Date.parse(com.date)));
       return (
-       
-          <>
-            <li key={com.id} className="text-left font-weight-normal">
-              <p> {com.comment} </p>
-              <p>
-                -- {com.author}, {formatedDate}{" "}
-              </p>
-            </li>
-          </>
-      
+        <>
+          <li key={com.id} className="text-left font-weight-normal">
+            <p> {com.comment} </p>
+            <p>
+              -- {com.author}, {formatedDate}{" "}
+            </p>
+          </li>
+        </>
       );
     });
   } else {
@@ -230,13 +226,11 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-           
-              <RenderComments
-                comments={props.comments}
-                postComment={props.postComment}
-                dish={props.dish.id}
-              />
-          
+            <RenderComments
+              comments={props.comments}
+              postComment={props.postComment}
+              dish={props.dish.id}
+            />
             <CommentForm
               dishId={props.dish.id}
               postComment={props.postComment}

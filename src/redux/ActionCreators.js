@@ -185,7 +185,6 @@ export const fetchLeaders = () => (dispatch) => {
   return fetch(baseUrl + "leaders")
     .then(
       (response) => {
-      
         if (response.ok) {
           return response;
         } else {
@@ -223,5 +222,96 @@ export const leaderLoading = () => ({
 
 export const leaderFailed = (errMess) => ({
   type: ActionType.LEADER_FAILED,
-  payload: errMess
+  payload: errMess,
 });
+
+export const postFeedback =
+  (firstname, lastname, tel, email, agree, contactType, message) =>
+  (dispatch) => {
+    const newFeedback = {
+      firstname: firstname,
+      lastname: lastname,
+      tel: tel,
+      email: email,
+      agree: agree,
+      contactType: contactType,
+      message: message,
+    };
+    newFeedback.date = new Date().toISOString();
+
+    return fetch(baseUrl + "feedback", {
+      method: "POST",
+      body: JSON.stringify(newFeedback),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "same-origin",
+    })
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            var error = new Error(
+              "Error " + response.status + ": " + response.statusText
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          var errmess = new Error(error.message);
+          throw errmess;
+        }
+      )
+      .then((res) => {
+        return res.json();
+      })
+      .then((response) => dispatch(addFeedback(response)))
+      .catch((error) => console.log("Post feedback", error));
+  };
+
+export const addFeedback = (message) => ({
+  type: ActionType.ADD_FEEDBACK,
+  payload: message,
+});
+
+export const feedBackFailed = (err) => ({
+  type: ActionType.FEEDBACK_FAILED,
+  payload: err,
+});
+export const addFeedBacks = (feedbacks) => ({
+  type: ActionType.ADD_FEEDBACKS,
+  payload: feedbacks,
+});
+export const fetchFeedBacks = () => (dispatch) => {
+  // dispatch(dishesLoading(true));
+
+  return fetch(baseUrl + "feedback")
+    .then(
+      (res) => {
+        if (res.ok) {
+          return res;
+        } else {
+          var error = new Error(
+            "error : " + res.status + ": " + res.statusText
+          );
+          error.response = res;
+          throw error;
+        }
+      },
+      (error) => {
+        var errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then((res) => {
+      return res.json();
+    })
+    .then((feedback) => {
+      return dispatch(addFeedBacks(feedback));
+    })
+    .catch((err) => {
+      dispatch(feedBackFailed(err));
+    });
+};

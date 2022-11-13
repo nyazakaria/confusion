@@ -7,7 +7,7 @@ import {
   Col,
   Label,
 } from "reactstrap";
-import { Control, Form, Errors, actions } from "react-redux-form";
+import { Control, LocalForm, Errors, actions } from "react-redux-form";
 import { Link } from "react-router-dom";
 
 const required = (val) => val && val.length;
@@ -20,14 +20,23 @@ const validEmail = (val) =>
 class Contact extends Component {
   constructor(props) {
     super(props);
-
+    console.warn(this.props.feedback.at(-1), "props");
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(values) {
-    console.log("Current State is: " + JSON.stringify(values));
-    alert("Current State is: " + JSON.stringify(values));
+    // console.log("Current State is: " + JSON.stringify(values));
+    alert("Current State is: " + JSON.stringify(this.props.feedback.at(-1)));
     console.log(this.props, "handle");
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.agree,
+      values.contactType,
+      values.message
+    );
     this.props.resetFeedbackForm();
   }
 
@@ -97,7 +106,7 @@ class Contact extends Component {
             <h3>send us your feedback</h3>
           </div>
           <div className="col-12 col-md-9">
-            <Form
+            <LocalForm
               model="feedback"
               onSubmit={(values) => this.handleSubmit(values)}
             >
@@ -263,7 +272,7 @@ class Contact extends Component {
                   </Button>
                 </Col>
               </Row>
-            </Form>
+            </LocalForm>
           </div>
         </div>
       </div>
